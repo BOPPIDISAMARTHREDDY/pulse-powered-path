@@ -20,6 +20,7 @@ export function useWorkoutData() {
   const [posts, setPosts] = useState<CommunityPost[]>(communityPosts);
   const [userData, setUserData] = useState(userProfile);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeWorkout, setActiveWorkout] = useState<WorkoutRecommendation | null>(null);
 
   // Simulate fetching data
   useEffect(() => {
@@ -31,6 +32,15 @@ export function useWorkoutData() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  // Start a workout
+  const startWorkout = (workout: WorkoutRecommendation) => {
+    setActiveWorkout(workout);
+    toast({
+      title: "Workout Started!",
+      description: `You've started "${workout.title}" workout. Keep it up!`,
+    });
+  };
 
   // Complete a workout
   const completeWorkout = (workout: WorkoutRecommendation) => {
@@ -90,6 +100,9 @@ export function useWorkoutData() {
       
       setUserBadges(updatedBadges);
       
+      // Clear active workout
+      setActiveWorkout(null);
+      
       // Show completion message
       toast({
         title: "Workout Completed!",
@@ -142,6 +155,8 @@ export function useWorkoutData() {
     posts,
     userData,
     isLoading,
+    activeWorkout,
+    startWorkout,
     completeWorkout,
     likePost,
     addPost,

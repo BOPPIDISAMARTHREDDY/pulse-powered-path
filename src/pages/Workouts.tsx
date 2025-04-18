@@ -6,11 +6,17 @@ import { useWorkoutData } from "@/hooks/useWorkoutData";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dumbbell, History, Plus, Search } from "lucide-react";
+import { Dumbbell, History, Plus, Search, Check, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 const Workouts: React.FC = () => {
-  const { recommendations, isLoading, completeWorkout } = useWorkoutData();
+  const { 
+    recommendations, 
+    isLoading, 
+    activeWorkout, 
+    startWorkout, 
+    completeWorkout 
+  } = useWorkoutData();
 
   return (
     <Layout>
@@ -48,11 +54,55 @@ const Workouts: React.FC = () => {
                 </TabsList>
                 
                 <TabsContent value="recommendations">
-                  <WorkoutRecommendations 
-                    recommendations={recommendations} 
-                    isLoading={isLoading}
-                    onCompleteWorkout={completeWorkout}
-                  />
+                  {activeWorkout ? (
+                    <div className="space-y-6">
+                      <div className="flex items-center">
+                        <Button 
+                          variant="ghost" 
+                          onClick={() => setActiveWorkout(null)}
+                          className="gap-1"
+                        >
+                          <ArrowLeft className="h-4 w-4" /> Back
+                        </Button>
+                      </div>
+                      
+                      <div className="bg-fitness-soft-purple rounded-lg p-6">
+                        <h2 className="text-2xl font-bold mb-4">{activeWorkout.title}</h2>
+                        <p className="mb-6">{activeWorkout.description}</p>
+                        
+                        <div className="flex flex-wrap gap-4 mb-6">
+                          <div className="bg-white/20 px-4 py-2 rounded-md">
+                            <span className="block text-sm text-muted-foreground">Duration</span>
+                            <span className="text-lg font-medium">{activeWorkout.duration} min</span>
+                          </div>
+                          <div className="bg-white/20 px-4 py-2 rounded-md">
+                            <span className="block text-sm text-muted-foreground">Calories</span>
+                            <span className="text-lg font-medium">{activeWorkout.calories} cal</span>
+                          </div>
+                          <div className="bg-white/20 px-4 py-2 rounded-md">
+                            <span className="block text-sm text-muted-foreground">Difficulty</span>
+                            <span className="text-lg font-medium">{activeWorkout.difficulty}</span>
+                          </div>
+                        </div>
+                        
+                        <div className="flex justify-end">
+                          <Button
+                            onClick={() => completeWorkout(activeWorkout)}
+                            className="gap-2"
+                          >
+                            <Check className="h-4 w-4" />
+                            Complete Workout
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <WorkoutRecommendations 
+                      recommendations={recommendations} 
+                      isLoading={isLoading}
+                      onStartWorkout={startWorkout}
+                    />
+                  )}
                 </TabsContent>
                 
                 <TabsContent value="saved">
