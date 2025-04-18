@@ -59,7 +59,7 @@ const Workouts: React.FC = () => {
                       <div className="flex items-center">
                         <Button 
                           variant="ghost" 
-                          onClick={() => setActiveWorkout(null)}
+                          onClick={() => startWorkout(null)}
                           className="gap-1"
                         >
                           <ArrowLeft className="h-4 w-4" /> Back

@@ -34,12 +34,14 @@ export function useWorkoutData() {
   }, []);
 
   // Start a workout
-  const startWorkout = (workout: WorkoutRecommendation) => {
+  const startWorkout = (workout: WorkoutRecommendation | null) => {
     setActiveWorkout(workout);
-    toast({
-      title: "Workout Started!",
-      description: `You've started "${workout.title}" workout. Keep it up!`,
-    });
+    if (workout) {
+      toast({
+        title: "Workout Started!",
+        description: `You've started "${workout.title}" workout. Keep it up!`,
+      });
+    }
   };
 
   // Complete a workout

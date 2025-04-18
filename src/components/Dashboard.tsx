@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
     posts,
     userData,
     isLoading,
-    completeWorkout,
+    startWorkout,
     likePost,
     addPost,
   } = useWorkoutData();
@@ -35,7 +35,7 @@ const Dashboard: React.FC = () => {
           <WorkoutRecommendations 
             recommendations={recommendations} 
             isLoading={isLoading}
-            onCompleteWorkout={completeWorkout}
+            onStartWorkout={startWorkout}
           />
         </div>
         

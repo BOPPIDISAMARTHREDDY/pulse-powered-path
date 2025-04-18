@@ -9,13 +9,15 @@ import { Badge } from "@/components/ui/badge";
 interface WorkoutRecommendationsProps {
   recommendations: WorkoutRecommendation[];
   isLoading?: boolean;
-  onStartWorkout: (workout: WorkoutRecommendation) => void;
+  onStartWorkout?: (workout: WorkoutRecommendation) => void;
+  onCompleteWorkout?: (workout: WorkoutRecommendation) => void;
 }
 
 const WorkoutRecommendations: React.FC<WorkoutRecommendationsProps> = ({
   recommendations,
   isLoading,
   onStartWorkout,
+  onCompleteWorkout,
 }) => {
   // Get badge color based on workout type
   const getWorkoutTypeColor = (type: string) => {
@@ -106,7 +108,7 @@ const WorkoutRecommendations: React.FC<WorkoutRecommendationsProps> = ({
                 <div className="flex justify-end">
                   <Button 
                     className="gap-2"
-                    onClick={() => onStartWorkout(workout)}
+                    onClick={() => onStartWorkout && onStartWorkout(workout)}
                   >
                     <Activity className="h-4 w-4" />
                     Start Workout
